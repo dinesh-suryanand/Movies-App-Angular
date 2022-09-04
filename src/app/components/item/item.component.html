@@ -12,3 +12,18 @@
         </div>
     </a>
 </ng-container>
+
+<ng-container *ngIf="tvItemData">
+    <a class="movie-item">
+        <div class="movie-item-rating">
+            <fa-icon class="app-icon" [icon]="star"></fa-icon>
+            <span>{{tvItemData.vote_average}}</span>/10
+        </div>
+        <div class="movie-item-image">
+            <img [src]="imageSizes.medium + tvItemData.backdrop_path" [alt]="tvItemData.name">
+        </div>
+        <div class="movie-item-title">
+            <p>{{tvItemData.name}}</p>
+        </div>
+    </a>
+</ng-container>
