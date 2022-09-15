@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { MovieDto, Movie, MovieVideoDto, MovieImages, MovieCredits, SimilarMovies } from '../models/movies';
 import { switchMap } from 'rxjs/operators'
 import { of } from 'rxjs'
+import { GenresDto } from '../models/genere';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class MoviesService {
       .pipe(switchMap(res => {
         return of(res.results.slice(0, count))
       }));
-    // return this.http.get('https://api.themoviedb.org/3/movie/upcoming?api_key=2fe5629241bfd3560ed03032c5a4e00b')
+    // return this.http.get('https://api.themoviedb.org/3/movie/upcoming?api_key=asdfasdfa')
   }
 
   getMovieVideos(id: string) {
@@ -28,7 +29,7 @@ export class MoviesService {
       .pipe(switchMap(res => {
         return of(res.results)
       }));
-    // return this.http.get('https://api.themoviedb.org/3/movie/upcoming?api_key=2fe5629241bfd3560ed03032c5a4e00b')
+    // return this.http.get('https://api.themoviedb.org/3/movie/upcoming?api_key=adsfasdfa')
   };
 
   searchMovies(page: number = 1) {
@@ -53,5 +54,20 @@ export class MoviesService {
   getSimilarMovies(id: string){
     return this.http.get<SimilarMovies>(`${this.baseUrl}/movie/${id}/similar?api_key=${this.apiKey}`);
   };
+
+  getMoviesGenre() {
+    return this.http.get<GenresDto>(`${this.baseUrl}/genre/movie/list?api_key=${this.apiKey}`)
+      .pipe(switchMap(res => {
+        return of(res.genres)
+      }));
+  };
+
+  getMoviesByGenre(genreId: string) {
+    return this.http.get<MovieDto>(`${this.baseUrl}/discover/movie?with_genres=${genreId}&api_key=${this.apiKey}`)
+      .pipe(switchMap(res => {
+        return of(res.results)
+      }));
+    // return this.http.get('https://api.themoviedb.org/3/movie/upcoming?api_key=asdfasdfa')
+  }
 
 }
